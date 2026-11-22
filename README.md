@@ -18,11 +18,11 @@ dotnet run --project ..\EasyModMaker\src\AssetBundleModifier.Generator\AssetBund
 
 2. Build via NuGet packages (default) or sibling `EasyModMaker` project references (`-p:UseLocalFramework=true`):
 
-## Notice
-Some Audio Files don't belong to me i think i should make clear of that but the textures they either belong to me or got them from google or from "imahuman" who made certain art
-
 ```powershell
 dotnet build SpookyBavarianTranslation.slnx -c Release
 # or using local framework sources:
 dotnet build SpookyBavarianTranslation.slnx -c Debug -p:UseLocalFramework=true
 ```
+
+## Notice
+Some Audio Files don't belong to me i think i should make clear of that but the textures they either belong to me or got them from google or from "imahuman" who made certain art
