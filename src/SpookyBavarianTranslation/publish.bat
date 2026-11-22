@@ -17,6 +17,10 @@ for %%R in (win-x64 win-arm64 linux-x64 linux-arm64 osx-x64 osx-arm64) do (
 )
 
 echo.
+echo ===== Building SpookyBavarianTranslation.Runtime (for ingame\) ...
+dotnet build "%~dp0..\SpookyBavarianTranslation.Runtime\SpookyBavarianTranslation.Runtime.csproj" -c Release -o "bin\Release\net10.0\runtime-out" || goto :failed
+
+echo.
 echo ===== Combining everything into %out% ...
 copy /y "bin\Release\net10.0\win-x64\publish\SpookyBavarianTranslation.exe"   "%out%\SpookyBavarianTranslation.exe" >nul
 copy /y "bin\Release\net10.0\win-arm64\publish\SpookyBavarianTranslation.exe" "%out%\SpookyBavarianTranslation_windows-arm64.exe" >nul
@@ -27,6 +31,10 @@ copy /y "bin\Release\net10.0\osx-arm64\publish\SpookyBavarianTranslation"     "%
 
 copy /y "bin\Release\net10.0\win-x64\publish\BavarianTranslations.json" "%out%\" >nul
 if exist "bin\Release\net10.0\win-x64\publish\ingame"   xcopy /E /I /Y /Q "bin\Release\net10.0\win-x64\publish\ingame"   "%out%\ingame" >nul
+if not exist "%out%\ingame" mkdir "%out%\ingame"
+copy /y "bin\Release\net10.0\runtime-out\SpookyBavarianTranslation.Runtime.dll" "%out%\ingame\" >nul
+if exist "bin\Release\net10.0\runtime-out\SpookyBavarianTranslation.Runtime.pdb" copy /y "bin\Release\net10.0\runtime-out\SpookyBavarianTranslation.Runtime.pdb" "%out%\ingame\" >nul
+
 if exist "bin\Release\net10.0\win-x64\publish\Textures" xcopy /E /I /Y /Q "bin\Release\net10.0\win-x64\publish\Textures" "%out%\Textures" >nul
 if exist "bin\Release\net10.0\win-x64\publish\Audio"    xcopy /E /I /Y /Q "bin\Release\net10.0\win-x64\publish\Audio"    "%out%\Audio" >nul
 copy /y "README.txt" "%out%\" >nul
