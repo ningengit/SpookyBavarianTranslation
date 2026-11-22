@@ -1,0 +1,17 @@
+.vs/
+.idea/
+*.user
+bin/
+obj/
+**/PublicizedAssemblies/
+lib/Managed/
+games/
+*.tpk
+*.dll
+ingame/
+CombinedPublish/
+_modbackup/
+_PlainAndEasyInjector_backup/
+gamepath.txt
+artifacts/
+TestResults/

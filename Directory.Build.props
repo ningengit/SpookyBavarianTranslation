@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <UseLocalFramework Condition="'$(UseLocalFramework)' == ''">false</UseLocalFramework>
+    <LocalFrameworkDir Condition="'$(LocalFrameworkDir)' == ''">$(MSBuildThisFileDirectory)..\EasyModMaker</LocalFrameworkDir>
+  </PropertyGroup>
+</Project>

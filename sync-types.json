@@ -1,0 +1,32 @@
+{
+  "gameName": "Spooky",
+  "namespace": "SpookyBavaria.GameAssets",
+  "outputDirectory": "games/Spooky.GameApi",
+  "frameworkVersion": "0.1.0-dev",
+  "includeClasses": [
+    "MonoBehaviour",
+    "RectTransform",
+    "Texture2D",
+    "AudioClip"
+  ],
+  "publicizeAssemblies": [
+    "Assembly-CSharp",
+    "Rewired_Core",
+    "Unity.TextMeshPro"
+  ],
+  "files": [
+    "level0",
+    "level1",
+    "sharedassets1.assets",
+    "StreamingAssets/doll_data",
+    "StreamingAssets/doll_scenes",
+    "StreamingAssets/em_data",
+    "StreamingAssets/em_scenes",
+    "StreamingAssets/kh_data",
+    "StreamingAssets/kh_scenes",
+    "StreamingAssets/mansionkillscreens",
+    "StreamingAssets/mansionroomdefs",
+    "StreamingAssets/mansionrooms",
+    "StreamingAssets/specimen"
+  ]
+}

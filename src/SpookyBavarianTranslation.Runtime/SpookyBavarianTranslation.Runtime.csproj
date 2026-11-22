@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>SpookyBavaria</RootNamespace>
+    <AssemblyName>SpookyBavarianTranslation.Runtime</AssemblyName>
+  </PropertyGroup>
+
+  <Import Project="..\..\games\Spooky.GameApi\GameApi.props"
+          Condition="Exists('..\..\games\Spooky.GameApi\GameApi.props')" />
+
+  <Target Name="_EnsureGameApiGenerated" BeforeTargets="BeforeBuild"
+          Condition="!Exists('..\..\games\Spooky.GameApi\GameApi.props')">
+    <Error Text="games/Spooky.GameApi/GameApi.props not found. Run 'AssetBundleModifier.Generator sync-types --game &lt;SpookyUnity_Data&gt; --config sync-types.json' first." />
+  </Target>
+
+  <ItemGroup Condition="'$(UseLocalFramework)' == 'true'">
+    <ProjectReference Include="$(LocalFrameworkDir)\src\PlainAndEasyInjector\PlainAndEasyInjector.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseLocalFramework)' != 'true'">
+    <PackageReference Include="PlainAndEasyInjector" />
+  </ItemGroup>
+</Project>

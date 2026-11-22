@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>SpookyBavaria</RootNamespace>
+    <AssemblyName>SpookyBavarianTranslation</AssemblyName>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' != ''">
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <Import Project="..\..\games\Spooky.GameApi\GameApi.props"
+          Condition="Exists('..\..\games\Spooky.GameApi\GameApi.props')" />
+
+  <Target Name="_EnsureGameApiGenerated" BeforeTargets="BeforeBuild"
+          Condition="!Exists('..\..\games\Spooky.GameApi\Spooky.GameApi.csproj')">
+    <Error Text="games/Spooky.GameApi/Spooky.GameApi.csproj not found. Run 'AssetBundleModifier.Generator sync-types --game &lt;SpookyUnity_Data&gt; --config sync-types.json' first." />
+  </Target>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\games\Spooky.GameApi\Spooky.GameApi.csproj"
+                      Condition="Exists('..\..\games\Spooky.GameApi\Spooky.GameApi.csproj')" />
+    <ProjectReference Include="..\SpookyBavarianTranslation.Runtime\SpookyBavarianTranslation.Runtime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseLocalFramework)' == 'true'">
+    <ProjectReference Include="$(LocalFrameworkDir)\src\AssetBundleModifier\AssetBundleModifier.csproj" />
+    <ProjectReference Include="$(LocalFrameworkDir)\src\AssetBundleModifier.Media\AssetBundleModifier.Media.csproj" />
+    <ProjectReference Include="$(LocalFrameworkDir)\src\PlainAndEasyInjector\PlainAndEasyInjector.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseLocalFramework)' != 'true'">
+    <PackageReference Include="AssetBundleModifier" />
+    <PackageReference Include="AssetBundleModifier.Media" />
+    <PackageReference Include="PlainAndEasyInjector" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="BavarianTranslations.json"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest"
+          ExcludeFromSingleFile="true" />
+    <None Include="Textures\**\*"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest"
+          ExcludeFromSingleFile="true" />
+    <None Include="Audio\**\*"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest"
+          ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
+  <!-- Stage netstandard2.1 SpookyBavarianTranslation.Runtime.{dll,pdb} into ingame/ for both Build and Publish (including single-file) -->
+  <Target Name="_StageModRuntimeInGameFiles"
+          BeforeTargets="GetCopyToOutputDirectoryItems"
+          DependsOnTargets="ResolveProjectReferences">
+    <PropertyGroup>
+      <_ModRuntimeDir>@(_ResolvedProjectReferencePaths->WithMetadataValue('Filename','SpookyBavarianTranslation.Runtime')->'%(RootDir)%(Directory)')</_ModRuntimeDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <ContentWithTargetPath Include="$(_ModRuntimeDir)SpookyBavarianTranslation.Runtime.dll"
+                             Condition="Exists('$(_ModRuntimeDir)SpookyBavarianTranslation.Runtime.dll')">
+        <TargetPath>ingame\SpookyBavarianTranslation.Runtime.dll</TargetPath>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ContentWithTargetPath>
+      <ContentWithTargetPath Include="$(_ModRuntimeDir)SpookyBavarianTranslation.Runtime.pdb"
+                             Condition="Exists('$(_ModRuntimeDir)SpookyBavarianTranslation.Runtime.pdb')">
+        <TargetPath>ingame\SpookyBavarianTranslation.Runtime.pdb</TargetPath>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ContentWithTargetPath>
+    </ItemGroup>
+  </Target>
+</Project>

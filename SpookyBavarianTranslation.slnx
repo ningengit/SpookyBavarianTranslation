@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SpookyBavarianTranslation/SpookyBavarianTranslation.csproj" />
+  <Project Path="src/SpookyBavarianTranslation.Runtime/SpookyBavarianTranslation.Runtime.csproj" />
+</Solution>

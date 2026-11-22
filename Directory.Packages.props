@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="AssetBundleModifier" Version="0.1.0-dev" />
+    <PackageVersion Include="AssetBundleModifier.Media" Version="0.1.0-dev" />
+    <PackageVersion Include="PlainAndEasyInjector" Version="0.1.0-dev" />
+    <PackageVersion Include="Krafs.Publicizer" Version="2.3.2" />
+    <PackageVersion Include="AssetsTools.NET" Version="3.0.5" />
+  </ItemGroup>
+</Project>
